@@ -13,7 +13,7 @@ const Cards = ({results}) => {
             <div className='fs-4 fw-bold mb-4'>{item.name}</div>
             <div className=''>
               <div>
-              <div className='fs-6'>Last Location</div>
+              <div className='fs-6'>Son Konum</div>
               <div className='fs-5'>{item.location.name}</div>
               </div>
             </div>
@@ -22,17 +22,17 @@ const Cards = ({results}) => {
         {(()=>{
           if(item.status === "Alive"){
             return(
-              <div className={`${styles.badge} position-absolute badge text-bg-success`} >{item.status}</div>
+              <div className={`${styles.badge} position-absolute badge text-bg-success`} >Canlı</div>
             );
           }
           else if(item.status === "Dead"){
             return(
-              <div className={`${styles.badge} position-absolute badge text-bg-danger`} >{item.status}</div>
+              <div className={`${styles.badge} position-absolute badge text-bg-danger`} >Ölü</div>
             );
           }
           else{
             return(
-              <div className={`${styles.badge} position-absolute badge text-bg-secondary`} >{item.status}</div>
+              <div className={`${styles.badge} position-absolute badge text-bg-secondary`} >Bilinmiyor</div>
             );
           }
         })()}

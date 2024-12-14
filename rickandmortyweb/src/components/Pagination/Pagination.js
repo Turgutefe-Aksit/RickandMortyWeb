@@ -12,8 +12,8 @@ const Pagination = ({setPageNumber,pageNumber,info}) => {
   //   };
   // return (
   //   <div className='container d-flex justify-content-center gap-5 my-5'>
-  //       <button onClick={prev} type="button" class="btn btn-primary">Önceki</button>
-  //       <button onClick={next} type="button" class="btn btn-primary">Sonraki</button>
+  //       <button onClick={prev} type="button" className="btn btn-primary">Önceki</button>
+  //       <button onClick={next} type="button" className="btn btn-primary">Sonraki</button>
   //   </div>
   // )
   return(
@@ -25,10 +25,10 @@ const Pagination = ({setPageNumber,pageNumber,info}) => {
       nextLinkClassName={`${styles.customColor} btn btn-success`}
       pageClassName='page-item'
       pageLinkClassName='page-link'
-      //activeClassName={`${styles.active}`}
+      //activeclassNameName={`${styles.active}`}
       activeClassName='active'
 
-      forcePage={pageNumber ===1?0 : pageNumber-1}
+      forcePage={pageNumber ===1?0 : pageNumber-1} //sayfalandırmanın ortalarına gelindiğinde görünür numaraları arttırma
       onPageChange={(data)=>{
         setPageNumber(data.selected + 1)
       }}
