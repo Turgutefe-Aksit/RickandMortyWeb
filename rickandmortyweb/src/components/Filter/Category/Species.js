@@ -1,7 +1,7 @@
 import React from 'react'
 import FilterButton from '../FilterButton';
 
-const Species = () => {
+const Species = ({setSpecies,setPageNumber}) => {
   let species = [
     "Human",
     "Alien",
@@ -26,7 +26,7 @@ const Species = () => {
         <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
           <div className="accordion-body d-flex flex-wrap gap-2">
           {species.map((items,index)=>(
-              <FilterButton key={index} name="species" index={index} items={items}/>
+              <FilterButton key={index} name="species" index={index} items={items} task={setSpecies} setPageNumber={setPageNumber}/>
             ))}
           </div>
         </div>

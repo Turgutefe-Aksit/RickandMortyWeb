@@ -13,12 +13,16 @@ function App() {
   const [pageNumber, setPageNumber] = useState(1)
   const [fetchedData, setFetchedData] = useState([])
   const [search, setSearch] = useState("")
+  const [status, setStatus] = useState("")
+  const [gender, setGender] = useState("")
+  const [species, setSpecies] = useState("")
 
   let {info,results} = fetchedData;
 
-  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}`;
+  //base url
+  let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
  
- 
+  // api'a sürekli istek atan yaşam döngüsü parçası
   useEffect(()=>{
     (async function(){
       let data = await fetch(api).then(res=>res.json());
@@ -35,7 +39,7 @@ function App() {
     <div className = "container">
       <div className="row">
         
-          <Filters></Filters>
+          <Filters setStatus={setStatus} setPageNumber={setPageNumber} setGender={setGender} setSpecies={setSpecies}></Filters>
 
         <div className="col-8">
         <div className="row">
@@ -45,7 +49,7 @@ function App() {
       </div>
     </div>
 
-    <Pagination info={info} pageNumber={pageNumber} setPageNumber={setPageNumber}></Pagination>  
+    <Pagination info={info} pageNumber={pageNumber} setPageNumber={setPageNumber} ></Pagination>  
   </div>
    
   );

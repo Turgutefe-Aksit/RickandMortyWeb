@@ -1,9 +1,10 @@
 import React from 'react'
 
-const FilterButton = ({name,index,items}) => {
+const FilterButton = ({name,index,items, task, setPageNumber }) => {
     //Bootstrapt Radios'tan alınan kod. 3 farklı filtre componentinin içerisindeki butonlar olarak kullanılıyor.
     // {`${name}-${index}`} dinamik olarak tek bir butonu tekrar yaratıp isim ve indeksini mapten alıp güncelliyor.
     // color: white !important; seçili butonun yazısı silik görünmemesi için.
+    //task propu ile app.js içerisindeki API url'de bulunan status update ediliyor(filtreleme için).
   return (
     <div>
         <style jsx>
@@ -20,7 +21,14 @@ const FilterButton = ({name,index,items}) => {
         </style>
 
         <div className="form-check">
-        <input className="form-check-input x" type="radio" name={name} id={`${name}-${index}`}/>
+        <input 
+            onClick={() =>{
+                setPageNumber(1);
+                task(items);
+            }}
+            className="form-check-input x" 
+            type="radio" name={name} 
+            id={`${name}-${index}`}/>
 
         <label class="btn btn-outline-primary" for={`${name}-${index}`}>{items}</label>
 
