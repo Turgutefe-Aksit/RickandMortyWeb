@@ -7,13 +7,12 @@ import Status from './Category/Status'
 const Filters = ({setGender,setStatus,setPageNumber,setSpecies}) => {
 
   //Api URL'e verilen state'leri temizleyerek filtreleri silme fonksiyonu
-  //Filtre için seçilen buton arkaplanları düzelmesi için en son sayfa yenileniyor.
   let clear = () =>{
     setGender("");
     setStatus("");
-    setPageNumber("");
+    setPageNumber(1);
     setSpecies("");
-    window.location.reload(false)
+    //window.location.reload(false)
   }
 
   //Bootstrap Accordion dökümantasyonundan alınan kod parçası. accordion kısmını 3 farklı componente bölerek componentleri accordion'a vermek daha temiz bir kod yapısı.
@@ -24,7 +23,7 @@ const Filters = ({setGender,setStatus,setPageNumber,setSpecies}) => {
         onClick={clear}
         style={{cursor: "pointer"}} 
         className='text-center text-primary text-decoration-underline mb-4'>
-          Filtreleri Temzile
+          Filtreleri Temizle
       </div>
 
       

@@ -12,7 +12,7 @@ const Search = ({setSearch,setPageNumber}) => {
                 setPageNumber(1)
                 setSearch(e.target.value);
             }}></input>
-        <button onClick={e=>{e.preventDefault();}} type="button" className={`${styles.btn} btn btn-primary fs-5`}>Search</button>
+        {/* <button onClick={e=>{e.preventDefault();}} type="button" className={`${styles.btn} btn btn-primary fs-5`}>Search</button> */}
     </form>
   )
 }
