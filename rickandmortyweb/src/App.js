@@ -1,70 +1,3 @@
-// import './App.css';
-// import "bootstrap/dist/css/bootstrap.min.css"
-// import "bootstrap/dist/js/bootstrap"
-// import Filters from './components/Filter/Filters';
-// import Cards from './components/Cards/Cards';
-// import React,{ useState , useEffect} from 'react';
-// import Pagination from './components/Pagination/Pagination';
-// import Search from './components/Search/Search';
-
-
-// function App() {
-
-//   const [pageNumber, setPageNumber] = useState(1)
-//   const [fetchedData, setFetchedData] = useState([])
-//   const [search, setSearch] = useState("")
-//   const [status, setStatus] = useState("")
-//   const [gender, setGender] = useState("")
-//   const [species, setSpecies] = useState("")
-
-//   let {info,results} = fetchedData;
-
-//   //base url
-//   let api = `https://rickandmortyapi.com/api/character/?page=${pageNumber}&name=${search}&status=${status}&gender=${gender}&species=${species}`;
- 
-//   // api'a sürekli istek atan yaşam döngüsü parçası
-//   useEffect(()=>{
-//     (async function(){
-//       let data = await fetch(api).then(res=>res.json());
-//       setFetchedData(data)
-//     })()
-//   },[api])
-
-//   return (
-//    <div className="App">
-//     <h1 className="text-center ubuntu my-5">Rick & Morty <span className="text-primary "> API</span></h1>
-
-//     <Search setPageNumber={setPageNumber} setSearch={setSearch}></Search>
-
-//     <div className = "container">
-//       <div className="row">
-        
-//           <Filters setStatus={setStatus} setPageNumber={setPageNumber} setGender={setGender} setSpecies={setSpecies}></Filters>
-
-//         <div className="col-8">
-//         <div className="row">
-//           {results? (
-//             <Cards data={results}></Cards>
-
-//           ) :
-//           (
-//             <div/>
-//           )}
-          
-//         </div>
-//         </div>
-//       </div>
-//     </div>
-
-//     <Pagination info={info} pageNumber={pageNumber} setPageNumber={setPageNumber} ></Pagination>  
-//   </div>
-   
-//   );
-// }
-
-// export default App;
-
-
 import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap/dist/js/bootstrap"
@@ -73,6 +6,7 @@ import Cards from './components/Cards/Cards';
 import React, { useState, useEffect } from 'react';
 import Pagination from './components/Pagination/Pagination';
 import Search from './components/Search/Search';
+import Dropdown from './components/Dropdown/Dropdown';
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -82,9 +16,7 @@ function App() {
   const [gender, setGender] = useState("");
   const [species, setSpecies] = useState("");
   const [filteredData, setFilteredData] = useState([]); // Data for pagination
-  
-
-  const itemsPerPage = 250; // Number of items per page
+  const [itemsPerPage, setItemsPerPage] = useState(250); // State to store items per page
 
   // Base API URL
   let api = `https://rickandmortyapi.com/api/character/?page=1&name=${search}&status=${status}&gender=${gender}&species=${species}`;
@@ -100,13 +32,10 @@ function App() {
         const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}&name=${search}&status=${status}&gender=${gender}&species=${species}`);
         const data = await response.json();
 
-        // allData = [...allData, ...data.results];
-        // hasNextPage = data.info.next !== null;
         if (data && data.results) {
           allData = [...allData, ...data.results];
           hasNextPage = data.info.next !== null;
         } else {
-          //console.log('API response is missing results:', data);
           break;
         }
         page++;
@@ -127,7 +56,6 @@ function App() {
 
   // Filter data on fetch
   useEffect(() => {
-    // Filtreleme işlemini useEffect içinde yapıyoruz
     let filtered = fetchedData;
   
     if (status) {
@@ -140,9 +68,14 @@ function App() {
       filtered = filtered.filter((item) => item.species === species);
     }
   
-    // Sonuçları setFilteredData'ya atıyoruz
     setFilteredData(filtered);
   }, [fetchedData, status, gender, species]);
+
+  // Update the number of items per page
+  const handleItemsPerPageChange = (newItemsPerPage) => {
+    setItemsPerPage(newItemsPerPage);
+    setPageNumber(1); // Reset to the first page when items per page change
+  };
 
   // Total number of pages for pagination
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -169,6 +102,7 @@ function App() {
             setGender={setGender}
             setSpecies={setSpecies}
           />
+
           <div className="col-8">
             <div className="row">
               {currentItems.length > 0 ? (
@@ -178,6 +112,10 @@ function App() {
               )}
             </div>
           </div>
+
+          <div className="col-1">
+            <Dropdown onItemsPerPageChange={handleItemsPerPageChange} />
+          </div>
         </div>
       </div>
     </div>
@@ -185,4 +123,5 @@ function App() {
 }
 
 export default App;
+
 
