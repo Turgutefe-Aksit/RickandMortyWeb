@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './Search.module.scss'
 
+// setSearch ile inputa girilen veriye göre filtre uygulama
 const Search = ({setSearch,setPageNumber}) => {
   return (
     <form className='d-flex justify-content-center gap-4 mb-5'>

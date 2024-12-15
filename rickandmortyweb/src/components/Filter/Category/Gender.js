@@ -54,7 +54,7 @@ const Gender = ({ setPageNumber, setGender }) => {
           aria-expanded="false"
           aria-controls="collapseOne"
         >
-          Cinsiyet
+          Gender
         </button>
       </h2>
       <div

@@ -7,6 +7,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination from './components/Pagination/Pagination';
 import Search from './components/Search/Search';
 import Dropdown from './components/Dropdown/Dropdown';
+import { fetchAllData } from './api/Api';
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -15,39 +16,20 @@ function App() {
   const [status, setStatus] = useState("");
   const [gender, setGender] = useState("");
   const [species, setSpecies] = useState("");
-  const [filteredData, setFilteredData] = useState([]); // Data for pagination
-  const [itemsPerPage, setItemsPerPage] = useState(250); // State to store items per page
-  const [selectedCharacter, setSelectedCharacter] = useState(null); // State to store selected character
+  const [filteredData, setFilteredData] = useState([]); 
+  const [itemsPerPage, setItemsPerPage] = useState(250); 
+  const [selectedCharacter, setSelectedCharacter] = useState(null); 
 
-  // Base API URL
-  //let api = `https://rickandmortyapi.com/api/character/?page=1&name=${search}&status=${status}&gender=${gender}&species=${species}`;
-
-  // Fetch all characters
+  // Tüm karakterleri getirmek için Api.
   useEffect(() => {
-    const fetchAllData = async () => {
-      let allData = [];
-      let page = 1;
-      let hasNextPage = true;
-
-      while (hasNextPage) {
-        const response = await fetch(`https://rickandmortyapi.com/api/character?page=${page}&name=${search}&status=${status}&gender=${gender}&species=${species}`);
-        const data = await response.json();
-
-        if (data && data.results) {
-          allData = [...allData, ...data.results];
-          hasNextPage = data.info.next !== null;
-        } else {
-          break;
-        }
-        page++;
-      }
-      setFetchedData(allData); // Store all fetched data
+    const getData = async () => {
+      const data = await fetchAllData({ search, status, gender, species });
+      setFetchedData(data);
     };
-
-    fetchAllData();
+    getData();
   }, [search, status, gender, species]);
 
-  // Apply client-side pagination
+  // Client tarafında sayfalama işlemi.
   const currentItems = filteredData.slice((pageNumber - 1) * itemsPerPage, pageNumber * itemsPerPage);
 
   // Handle page change
@@ -55,7 +37,7 @@ function App() {
     setPageNumber(newPage);
   };
 
-  // Filter data on fetch
+  // Gelen veriyi filtreleme için
   useEffect(() => {
     let filtered = fetchedData;
 
@@ -72,18 +54,17 @@ function App() {
     setFilteredData(filtered);
   }, [fetchedData, status, gender, species]);
 
-  // Update the number of items per page
+  // Sayfa başına öğe sayısını güncelleme
   const handleItemsPerPageChange = (newItemsPerPage) => {
     setItemsPerPage(newItemsPerPage);
-    setPageNumber(1); // Reset to the first page when items per page change
+    setPageNumber(1); 
   };
 
-  // Total number of pages for pagination
+  // Toplam sayfa sayısı
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
-  // Function to handle selecting a character
   const handleCharacterClick = (character) => {
-    setSelectedCharacter(selectedCharacter?.id === character.id ? null : character); // Toggle selection
+    setSelectedCharacter(selectedCharacter?.id === character.id ? null : character); 
   };
 
   return (

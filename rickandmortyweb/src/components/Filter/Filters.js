@@ -23,7 +23,7 @@ const Filters = ({setGender,setStatus,setPageNumber,setSpecies}) => {
         onClick={clear}
         style={{cursor: "pointer"}} 
         className='text-center text-primary text-decoration-underline mb-4'>
-          Filtreleri Temizle
+          Clear Filters
       </div>
 
       

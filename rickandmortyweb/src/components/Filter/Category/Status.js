@@ -71,7 +71,7 @@ const Status = ({ setPageNumber, setStatus }) => {
           aria-expanded="true"
           aria-controls="collapseThree"
         >
-          Durum
+          Statu
         </button>
       </h2>
       <div
