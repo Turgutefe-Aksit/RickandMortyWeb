@@ -1,9 +1,41 @@
-.customColor {
-    color: white !important;
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  button {
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-weight: 500;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &.active {
+      background-color: #0d9afe;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 
-  .active {
-    background-color: blue; 
-    color: white !important; 
-    
+  .nav-button {
+    background-color: #4bf16e;
+    color: white;
+
+    &:hover {
+      background-color: #3cd157;
+    }
   }
+}
