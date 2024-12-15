@@ -10,9 +10,9 @@ function Dropdown({ onItemsPerPageChange }) {
     <div className="dropdown">
       <label htmlFor="itemsPerPage" className="form-label">Items per page:</label>
       <select id="itemsPerPage" className="form-select" onChange={handleChange}>
-        <option value="50">50</option>
-        <option value="150">150</option>
         <option value="250">250</option>
+        <option value="150">150</option>
+        <option value="50">50</option>
       </select>
     </div>
   );

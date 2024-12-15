@@ -5,7 +5,7 @@ const Pagination = ({ totalItems, itemsPerPage, currentPage, onPageChange }) => 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div className="pagination justify-content-center gap-3">
+    <div className="pagination justify-content-center gap-3 my-3">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}

@@ -6,7 +6,7 @@ const Search = ({setSearch,setPageNumber}) => {
   return (
     <form className='d-flex justify-content-center gap-4 mb-5'>
         <input 
-            placeholder='Karakter Ara' 
+            placeholder='Search for Character' 
             type='text' 
             className={styles.input} 
             onChange={e=>{
