@@ -1,6 +1,6 @@
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap/dist/js/bootstrap"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap";
 import Filters from './components/Filter/Filters';
 import Cards from './components/Cards/Cards';
 import React, { useState, useEffect } from 'react';
@@ -17,9 +17,10 @@ function App() {
   const [species, setSpecies] = useState("");
   const [filteredData, setFilteredData] = useState([]); // Data for pagination
   const [itemsPerPage, setItemsPerPage] = useState(250); // State to store items per page
+  const [selectedCharacter, setSelectedCharacter] = useState(null); // State to store selected character
 
   // Base API URL
-  let api = `https://rickandmortyapi.com/api/character/?page=1&name=${search}&status=${status}&gender=${gender}&species=${species}`;
+  //let api = `https://rickandmortyapi.com/api/character/?page=1&name=${search}&status=${status}&gender=${gender}&species=${species}`;
 
   // Fetch all characters
   useEffect(() => {
@@ -57,7 +58,7 @@ function App() {
   // Filter data on fetch
   useEffect(() => {
     let filtered = fetchedData;
-  
+
     if (status) {
       filtered = filtered.filter((item) => item.status === status);
     }
@@ -67,7 +68,7 @@ function App() {
     if (species) {
       filtered = filtered.filter((item) => item.species === species);
     }
-  
+
     setFilteredData(filtered);
   }, [fetchedData, status, gender, species]);
 
@@ -79,6 +80,11 @@ function App() {
 
   // Total number of pages for pagination
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+  // Function to handle selecting a character
+  const handleCharacterClick = (character) => {
+    setSelectedCharacter(selectedCharacter?.id === character.id ? null : character); // Toggle selection
+  };
 
   return (
     <div className="App">
@@ -103,17 +109,17 @@ function App() {
             setSpecies={setSpecies}
           />
 
-          <div className="col-8">
+          <div className="col-7">
             <div className="row">
               {currentItems.length > 0 ? (
-                <Cards data={currentItems} />
+                <Cards data={currentItems} onCharacterClick={handleCharacterClick} selectedCharacter={selectedCharacter} />
               ) : (
-                <div>Loading...</div>
+                <div>Character not Found.</div>
               )}
             </div>
           </div>
-
-          <div className="col-1">
+          
+          <div className="col-2">
             <Dropdown onItemsPerPageChange={handleItemsPerPageChange} />
           </div>
         </div>
@@ -123,5 +129,3 @@ function App() {
 }
 
 export default App;
-
-

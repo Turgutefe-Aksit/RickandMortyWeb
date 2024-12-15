@@ -7,51 +7,7 @@ import {
   createColumnHelper,
 } from '@tanstack/react-table';
 
-const Cards = ({data}) => {
-
-  // let display;
-  // if(results){
-  //   display = results.map(item =>{
-  //     return( <div key={item.id} className='col-4 mb-4 position-relative'>
-  //       <div className={styles.cards}>
-  //         <img src={item.image} alt='' className={`${styles.img} img-fluid`}></img>
-  //         <div style={{padding:"10px"}} className='content'> 
-  //           <div className='fs-4 fw-bold mb-4'>{item.name}</div>
-  //           <div className=''>
-  //             <div>
-  //             <div className='fs-6'>Son Konum</div>
-  //             <div className='fs-5'>{item.location.name}</div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //       {(()=>{
-  //         if(item.status === "Alive"){
-  //           return(
-  //             <div className={`${styles.badge} position-absolute badge text-bg-success`} >Canlı</div>
-  //           );
-  //         }
-  //         else if(item.status === "Dead"){
-  //           return(
-  //             <div className={`${styles.badge} position-absolute badge text-bg-danger`} >Ölü</div>
-  //           );
-  //         }
-  //         else{
-  //           return(
-  //             <div className={`${styles.badge} position-absolute badge text-bg-secondary`} >Bilinmiyor</div>
-  //           );
-  //         }
-  //       })()}
-        
-  //     </div>)
-  //   })
-  // }
-  // else{
-  //   display = "Karakter Bulunamadı" 
-  // }
-  // return (
-  //   < >{display}</>
-  // )
+const Cards = ({ data, onCharacterClick, selectedCharacter }) => {
 
   const columnHelper = createColumnHelper();
   const columns = [
@@ -85,14 +41,7 @@ const Cards = ({data}) => {
       header: 'Gender',
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor('origin.name', {
-      header: 'Origin',
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor('location.name', {
-      header: 'Location',
-      cell: (info) => info.getValue(),
-    }),
+    
   ];
 
   // Create the table instance
@@ -126,23 +75,38 @@ const Cards = ({data}) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  style={{ padding: '8px', borderBottom: '1px solid #ddd' }}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            const character = row.original;
+            const isSelected = selectedCharacter?.id === character.id;
+            return (
+              <React.Fragment key={row.id}>
+                <tr onClick={() => onCharacterClick(character)} style={{ cursor: 'pointer', backgroundColor: isSelected ? '#f0f0f0' : 'transparent' }}>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+                {isSelected && (
+                  <tr>
+                    <td colSpan="8" style={{ padding: '10px', backgroundColor: '#f9f9f9' }}>
+                      <h5>Character Details:</h5>
+                      <p><strong>Name:</strong> {character.name}</p>
+                      <p><strong>Status:</strong> {character.status}</p>
+                      <p><strong>Species:</strong> {character.species}</p>
+                      <p><strong>Gender:</strong> {character.gender}</p>
+                      <p><strong>Origin:</strong> {character.origin.name}</p>
+                      <p><strong>Location:</strong> {character.location.name}</p>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
-
 }
 
-export default Cards
+export default Cards;
