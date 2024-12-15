@@ -7,7 +7,7 @@ import React, { useState, useEffect } from 'react';
 import Pagination from './components/Pagination/Pagination';
 import Search from './components/Search/Search';
 import Dropdown from './components/Dropdown/Dropdown';
-import { fetchAllData } from './api/Api';
+import { fetchAllData } from './api/api';
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
