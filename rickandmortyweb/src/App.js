@@ -8,6 +8,8 @@ import Pagination from './components/Pagination/Pagination';
 import Search from './components/Search/Search';
 import Dropdown from './components/Dropdown/Dropdown';
 import { fetchAllData } from './api/api';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -19,12 +21,14 @@ function App() {
   const [filteredData, setFilteredData] = useState([]); 
   const [itemsPerPage, setItemsPerPage] = useState(250); 
   const [selectedCharacter, setSelectedCharacter] = useState(null); 
+  const [loading, setLoading] = useState(true);
 
   // Tüm karakterleri getirmek için Api.
   useEffect(() => {
     const getData = async () => {
       const data = await fetchAllData({ search, status, gender, species });
       setFetchedData(data);
+      setLoading(false);
     };
     getData();
   }, [search, status, gender, species]);
@@ -92,11 +96,19 @@ function App() {
 
           <div className="col-7">
             <div className="row">
-              {currentItems.length > 0 ? (
-                <Cards data={currentItems} onCharacterClick={handleCharacterClick} selectedCharacter={selectedCharacter} />
+            {currentItems.length > 0 ? (
+              <Cards 
+                data={currentItems} 
+                onCharacterClick={handleCharacterClick} 
+                selectedCharacter={selectedCharacter} 
+              />
+            ) : (
+              loading ? (
+                <Skeleton count={20}/>
               ) : (
                 <div>Character not Found.</div>
-              )}
+              )
+            )}
             </div>
           </div>
           

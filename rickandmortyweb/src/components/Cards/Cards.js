@@ -57,6 +57,7 @@ const Cards = ({ data, onCharacterClick, selectedCharacter }) => {
     getSortedRowModel: getSortedRowModel(), // Enable sorting
   });
 
+  
   return (
     <div style={{ padding: '20px' }}>
       <h2>Rick and Morty Characters</h2>
